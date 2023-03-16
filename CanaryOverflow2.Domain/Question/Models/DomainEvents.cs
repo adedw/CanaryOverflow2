@@ -2,7 +2,7 @@ using System;
 
 using CanaryOverflow2.Domain.Common;
 
-namespace CanaryOverflow2.Domain.Question;
+namespace CanaryOverflow2.Domain.Question.Models;
 
 public record QuestionCreated(Guid Id, string Title, string Body, DateTime CreatedAt) : IDomainEvent;
 

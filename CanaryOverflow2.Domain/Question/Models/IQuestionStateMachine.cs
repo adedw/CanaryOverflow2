@@ -1,6 +1,6 @@
 using System;
 
-namespace CanaryOverflow2.Domain.Question;
+namespace CanaryOverflow2.Domain.Question.Models;
 
 public interface IQuestionStateMachine
 {

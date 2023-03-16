@@ -6,7 +6,7 @@ using CommunityToolkit.Diagnostics;
 
 using JetBrains.Annotations;
 
-namespace CanaryOverflow2.Domain.Question;
+namespace CanaryOverflow2.Domain.Question.Models;
 
 public class Question : AggregateRoot<Guid, Question>
 {

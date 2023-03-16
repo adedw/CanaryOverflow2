@@ -1,10 +1,11 @@
 using CanaryOverflow2.Domain.Question;
+using CanaryOverflow2.Domain.Question.Models;
 
 using FluentAssertions.Execution;
 
 namespace CanaryOverflow2.Domain.UnitTests;
 
-using Question = Question.Question;
+using Question = Question.Models.Question;
 
 public class QuestionTests
 {

@@ -1,4 +1,5 @@
 using CanaryOverflow2.Domain.Question;
+using CanaryOverflow2.Domain.Question.Models;
 
 namespace CanaryOverflow2.Domain.UnitTests;
 
