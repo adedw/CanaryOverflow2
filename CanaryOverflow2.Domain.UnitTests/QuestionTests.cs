@@ -1,4 +1,5 @@
-using CanaryOverflow2.Domain.Question;
+using System.Text.Json;
+
 using CanaryOverflow2.Domain.Question.Models;
 
 using FluentAssertions.Execution;
@@ -7,6 +8,7 @@ namespace CanaryOverflow2.Domain.UnitTests;
 
 using Question = Question.Models.Question;
 
+[Trait("Category", "Unit")]
 public class QuestionTests
 {
     [Fact]
@@ -32,9 +34,9 @@ public class QuestionTests
     }
 
     [Theory]
-    [InlineData("00000000-0000-0000-0000-000000000000", "some title","some text")]
-    [InlineData("233292c1-e9b6-4d6c-8034-47de06257515", "","some text")]
-    [InlineData("233292c1-e9b6-4d6c-8034-47de06257515", "some title","")]
+    [InlineData("00000000-0000-0000-0000-000000000000", "some title", "some text")]
+    [InlineData("233292c1-e9b6-4d6c-8034-47de06257515", "", "some text")]
+    [InlineData("233292c1-e9b6-4d6c-8034-47de06257515", "some title", "")]
     public void Create_question_with_invalid_input(Guid id, string? title, string? text)
     {
         var act = () => new Question(id, title, text, DateTime.Now);
@@ -50,7 +52,6 @@ public class QuestionTests
         var createdAt = DateTime.Now;
 
         var question = new Question(questionId, title, body, createdAt);
-
         var act = () => question.UpdateTitle(null);
 
         using (new AssertionScope())
@@ -70,7 +71,6 @@ public class QuestionTests
         const string updatedTitle = "new title";
 
         var question = new Question(questionId, title, body, createdAt);
-
         question.UpdateTitle(updatedTitle);
 
         var events = question.GetUncommittedEvents();
@@ -84,7 +84,7 @@ public class QuestionTests
                 .Should().Be(new TitleUpdated(updatedTitle));
         }
     }
-    
+
     [Fact]
     public void Update_with_invalid_body()
     {
@@ -92,14 +92,13 @@ public class QuestionTests
         const string title = "title test";
         const string body = "text test";
         var createdAt = DateTime.Now;
-        
-        var question = new Question(questionId, title, body, createdAt);
 
+        var question = new Question(questionId, title, body, createdAt);
         var act = () => question.UpdateBody(null);
 
         act.Should().Throw<ArgumentNullException>();
     }
-    
+
     [Fact]
     public void Update_to_some_text()
     {
@@ -108,11 +107,10 @@ public class QuestionTests
         const string body = "text test";
         var createdAt = DateTime.Now;
         const string updatedBody = "new body";
-        
+
         var question = new Question(questionId, title, body, createdAt);
-        
         question.UpdateBody(updatedBody);
-        
+
         var events = question.GetUncommittedEvents();
         using (new AssertionScope())
         {
@@ -132,9 +130,8 @@ public class QuestionTests
         const string title = "title test";
         const string body = "text test";
         var createdAt = DateTime.Now;
-        
+
         var question = new Question(questionId, title, body, createdAt);
-        
         question.Approve();
 
         var events = question.GetUncommittedEvents();
@@ -147,4 +144,21 @@ public class QuestionTests
         }
     }
 
+    [Fact]
+    public void Question_serialization()
+    {
+        var questionId = Guid.Parse("622f9e4a-1453-4749-a216-a5d19698b8c2");
+        const string title = "title test";
+        const string body = "text test";
+        var createdAt = new DateTime(2023, 03, 19, 21, 38, 16, 0, DateTimeKind.Utc);
+
+        var question = new Question(questionId, title, body, createdAt);
+
+        var jsonElement = JsonSerializer.SerializeToElement(question);
+
+        jsonElement.GetProperty("id").GetGuid().Should().Be(questionId);
+        jsonElement.GetProperty("title").GetString().Should().Be("title test");
+        jsonElement.GetProperty("body").GetString().Should().Be("text test");
+        jsonElement.GetProperty("createdAt").GetDateTime().Should().Be(createdAt);
+    }
 }
