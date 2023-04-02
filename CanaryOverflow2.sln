@@ -5,6 +5,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFiles", "{6198BA2E-DE95-443A-86C2-4087126B07D1}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanaryOverflow2.Domain.UnitTests", "CanaryOverflow2.Domain.UnitTests\CanaryOverflow2.Domain.UnitTests.csproj", "{8F0C4A6C-05D9-4D36-B3D5-9C6FDAFAAC36}"
@@ -12,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanaryOverflow2.Infrastructure", "CanaryOverflow2.Infrastructure\CanaryOverflow2.Infrastructure.csproj", "{BDE5BFAC-F8B7-463A-B560-AD3981135C7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanaryOverflow2.Infrastructure.IntegrationTests", "CanaryOverflow2.Infrastructure.IntegrationTests\CanaryOverflow2.Infrastructure.IntegrationTests.csproj", "{0D025DBA-0E27-4BA7-9DF3-FF43969EBB72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanaryOverflow2.WebAPI", "CanaryOverflow2.WebAPI\CanaryOverflow2.WebAPI.csproj", "{1741B23C-8CED-4561-BF55-A9C4C113D32C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,5 +40,9 @@ Global
 		{0D025DBA-0E27-4BA7-9DF3-FF43969EBB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D025DBA-0E27-4BA7-9DF3-FF43969EBB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D025DBA-0E27-4BA7-9DF3-FF43969EBB72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1741B23C-8CED-4561-BF55-A9C4C113D32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1741B23C-8CED-4561-BF55-A9C4C113D32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1741B23C-8CED-4561-BF55-A9C4C113D32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1741B23C-8CED-4561-BF55-A9C4C113D32C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

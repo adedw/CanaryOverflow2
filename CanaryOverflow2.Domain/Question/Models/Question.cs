@@ -7,8 +7,6 @@ using CanaryOverflow2.Domain.Common;
 
 using CommunityToolkit.Diagnostics;
 
-using JetBrains.Annotations;
-
 namespace CanaryOverflow2.Domain.Question.Models;
 
 [DebuggerDisplay("{Id}")]
@@ -44,15 +42,15 @@ public class Question : AggregateRoot<Guid, Question>
                         break;
 
                     case "title":
-                        question._title = reader.GetString();
+                        question.Title = reader.GetString();
                         break;
 
                     case "body":
-                        question._body = reader.GetString();
+                        question.Body = reader.GetString();
                         break;
-                    
+
                     case "createdAt":
-                        question._createdAt = reader.GetDateTime();
+                        question.CreatedAt = reader.GetDateTime();
                         break;
                 }
             }
@@ -65,22 +63,18 @@ public class Question : AggregateRoot<Guid, Question>
             writer.WriteStartObject();
 
             writer.WriteString("id", value.Id);
-            writer.WriteString("title", value._title);
-            writer.WriteString("body", value._body);
-            writer.WriteString("createdAt", value._createdAt);
+            writer.WriteString("title", value.Title);
+            writer.WriteString("body", value.Body);
+            writer.WriteString("createdAt", value.CreatedAt);
 
             writer.WriteEndObject();
         }
     }
 
     #endregion
-    
-    private readonly IQuestionStateMachine _stateMachine;
-    private string? _title;
-    private string? _body;
-    private DateTime _createdAt;
 
-    [UsedImplicitly]
+    private readonly IQuestionStateMachine _stateMachine;
+
     private Question() : this(QuestionState.Unapproved)
     {
     }
@@ -98,6 +92,11 @@ public class Question : AggregateRoot<Guid, Question>
 
         Append(new QuestionCreated(id, title, body, createdAt));
     }
+
+    public string? Title { get; private set; }
+    public string? Body { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public QuestionState State => _stateMachine.State;
 
     public void UpdateTitle(string? title)
     {
@@ -149,19 +148,19 @@ public class Question : AggregateRoot<Guid, Question>
     private void Apply(QuestionCreated questionCreated)
     {
         Id = questionCreated.Id;
-        _title = questionCreated.Title;
-        _body = questionCreated.Body;
-        _createdAt = questionCreated.CreatedAt;
+        Title = questionCreated.Title;
+        Body = questionCreated.Body;
+        CreatedAt = questionCreated.CreatedAt;
     }
 
     private void Apply(TitleUpdated titleUpdated)
     {
-        _title = titleUpdated.Title;
+        Title = titleUpdated.Title;
     }
 
     private void Apply(BodyUpdated bodyUpdated)
     {
-        _body = bodyUpdated.Body;
+        Body = bodyUpdated.Body;
     }
 
     private void Apply(QuestionApproved _)

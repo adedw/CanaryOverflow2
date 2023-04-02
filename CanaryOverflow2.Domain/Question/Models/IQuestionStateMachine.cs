@@ -21,4 +21,9 @@ public interface IQuestionStateMachine
     /// </summary>
     /// <exception cref="InvalidOperationException">This transition not allowed from current state.</exception>
     void SetUnanswered();
+    
+    /// <summary>
+    /// Current state.
+    /// </summary>
+    QuestionState State { get; }
 }
